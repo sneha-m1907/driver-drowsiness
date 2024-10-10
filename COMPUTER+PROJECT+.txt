@@ -1,0 +1,459 @@
+            DRIVER 
+     DROWSINESS 
+       DETECTION
+
+
+           Harshitha Jampani
+            A. Kapil Raisoni
+        Kishore Chakrabooty. D
+            Mettukuru Sneha
+         Yamini Krishna Kanuru
+
+        Btech Cse (Iot-A)
+
+                             
+
+
+COMPUTER SCIENCE 
+COMPUTER SCIENCE 
+COMPUTER SCIENCE 
+                              CONTENTS
+
+
+COMPUTER SCIENCE 
+        INTRODUCTION
+Driver fatigue is a signiﬁcant factor in a large 
+number of vehicle accidents.
+The development of technologies for detecting 
+or preventing drowsiness at the wheel is a 
+major challenge in the ﬁeld of accident-
+avoidance systems. Because of the hazard that 
+drowsiness presents on the road, methods 
+need to be developed for counteracting its 
+affects.
+The aim   of this project is to develop a 
+prototype drowsiness detection system. The 
+focus will be placed on designing a system that 
+will accurately monitor the open or closed state 
+of the driver’s eyes in real-time.
+By monitoring the eyes, it is believed that the 
+symptoms of driver fatigue can be detected 
+early enough to avoid a car accident.
+Detection of fatigue involves the observation of 
+eye movements and blink patterns in a 
+sequence of images of a face.
+ Problem Deﬁnition
+Current drowsiness detection systems monitoring 
+the   driver’s condition   requires  complex 
+
+COMPUTER SCIENCE 
+computation and expensive equipment, not 
+comfortable to wear during driving and is not 
+suitable for driving conditions; for example, 
+Electroencephalography         (EEG)        and 
+Electrocardiography (ECG), i. e. detecting the 
+brain frequency and measuring the rhythm of 
+heart, respectively. 
+A drowsiness detection system     which use a 
+camera placed in front of the driver is more 
+suitable to be use but the physical signs that will 
+indicate drowsiness need to be located ﬁrst in 
+order to come up with a drowsiness detection 
+algorithm that is reliable and accurate.
+Lighting intensity and while the driver tilt their 
+face left or right are the problems occur during 
+detection of eyes and mouth region.
+Therefore, this project aims to analyse all the 
+previous research and method, hence propose a 
+method to detect drowsiness by using video or 
+webcam.
+It analyses the video images that have been 
+recorded and come up with a system that can 
+analyse each frame of the video.
+                FLOWCHART FOR 
+         DROWSINESS    DETECTION 
+                     SYSTEM
+
+
+COMPUTER SCIENCE 
+COMPUTER SCIENCE 
+ REQUIRED SPECIFICATION
+Tensorﬂow.js - TensorFlow.js is an open source 
+WebGL-accelerated    JavaScript library   for 
+machine    intelligence. It brings     highly 
+performant machine learning building blocks to 
+your ﬁngertips, allowing you to train neural 
+networks in a browser or run pre-trained 
+models in inference mode.
+Keras - It is an API designed for human beings, 
+not machines. Keras follows best practices for 
+reducing cognitive load: it offers consistent & 
+simple APIs, it minimises the number of user 
+actions required for common use cases, and it 
+provides clear and actionable feedback upon 
+user error. This makes it easy to learn and easy 
+to use. As a Keras user, you are more 
+productive, allowing you to try more ideas than 
+your competition, faster -- which in turn helps 
+you win machine learning competitions.
+Python3 - Python language is one of the most 
+ﬂexible languages and can be used for various 
+purposes. Python has  gained huge  popularity 
+
+COMPUTER SCIENCE 
+base  of this. Python  does  contain  special 
+libraries for machine learning namely scipy and 
+numpy which great for linear algebra and 
+getting to know kernel methods of machine 
+learning. 
+Webcam -   A webcam   is a video camera  that 
+feeds or streams its image in real time to or 
+through a computer to a computer network. 
+When "captured" by the computer, the video 
+stream may be saved, viewed or sent on to 
+other networks travelling through systems such 
+as the internet, and e-mailed as an attachment. 
+When  sent  to a  remote  location, the video 
+stream may be saved, viewed or on sent there.
+PyGame - Pygame is a Python wrapper for the 
+SDL library, which stands for Simple Direct 
+Media Layer. SDL provides cross-platform 
+access to your system’s underlying multimedia 
+hardware components, such as sound, video, 
+mouse, keyboard, and joystick. So in the 
+project we will use it for the alarm purpose
+
+
+COMPUTER SCIENCE 
+         Software 
+   Speciﬁcations
+
+1.
+1.1.
+1.1.1.
+ Operating System: Windows 7 
+   or higher, Linux
+ IDE: Python IDE
+ Language used: Python
+
+
+COMPUTER SCIENCE 
+         Hardware 
+    Speciﬁcations
+
+
+o
+
+  Webcam
+  LCD display
+  Processor: Pentium dual core
+
+  Processor   speed: 1.6GHz 
+   (minimum)
+  RAM: 1 GB
+  Disk Space: 250 MB or higher
+
+
+COMPUTER SCIENCE 
+                SYSTEM DESIGN
+
+  Use Case Diagram
+ A Use Case Diagram consists of set of elements and the 
+relationships between them. It depicts    all the scenarios, 
+regarding how our application interacts with users and other 
+external systems to achieve the goals of application. The 
+main components of a use case diagram include actors, use 
+cases and their relationships. The use case is an external 
+view of the system that represents some actions that the 
+user performs to get a job done. Actors are the users who 
+interact with the application.
+
+
+COMPUTER SCIENCE 
+  Sequence Diagram
+ Sequence diagrams model the ﬂow of 
+logic within your system   in a visual 
+manner, enabling you both to document 
+and validate your logic, and are 
+commonly used for both analysis and 
+design purposes.
+
+
+                  CODE
+
+   import os
+   from keras.preprocessing import image
+   import matplotlib.pyplot as plt 
+   import numpy as np
+   from keras.utils.np_utils import to_categorical
+COMPUTER SCIENCE 
+    import random,shutil
+    from keras.models import Sequential
+    from              keras.layers             import 
+   Dropout,Conv2D,Flatten,Dense,       MaxPooling2D, 
+   BatchNormalization
+    from keras.models import load_model
+    def                                 generator(dir, 
+   gen=image.ImageDataGenerator(rescale=1./255), 
+   shuﬄe=True,batch_size=1,target_size=(24,24),class
+   _mode='categorical' ):
+       return 
+   gen.ﬂow_from_directory(dir,batch_size=batch_size,s
+   huﬄe=shuﬄe,color_mode='grayscale',class_mode=
+   class_mode,target_size=target_size)
+    BS= 32
+    TS=(24,24)
+    train_batch=    generator('data/train',shuﬄe=True, 
+   batch_size=BS,target_size=TS)
+    valid_batch=    generator('data/valid',shuﬄe=True, 
+   batch_size=BS,target_size=TS)
+    SPE= len(train_batch.classes)//BS
+    VS = len(valid_batch.classes)//BS
+    print(SPE,VS)
+    # img,labels= next(train_batch)
+
+COMPUTER SCIENCE 
+    # print(img.shape)
+    model = Sequential([
+       Conv2D(32, kernel_size=(3, 3), activation='relu', 
+   input_shape=(24,24,1)),
+       MaxPooling2D(pool_size=(1,1)),
+       Conv2D(32,(3,3),activation='relu'),
+       MaxPooling2D(pool_size=(1,1)),
+    #32 convolution ﬁlters used each of size 3x3
+    #again
+       Conv2D(64, (3, 3), activation='relu'),
+       MaxPooling2D(pool_size=(1,1)),
+    #64 convolution ﬁlters used each of size 3x3
+    #choose the best features via pooling
+       
+    #randomly turn neurons on and off to improve 
+   convergence
+       Dropout(0.25),
+    #ﬂatten since too many dimensions, we only want 
+   a classiﬁcation output
+       Flatten(),
+    #fully connected to get all relevant data
+       Dense(128, activation='relu'),
+    #one more dropout for convergence' sake :) 
+       Dropout(0.5),
+
+COMPUTER SCIENCE 
+    #output a softmax to squash the matrix into output 
+   probabilities
+       Dense(2, activation='softmax')
+    ])
+    model.compile(optimizer='adam',loss='categorical_
+   crossentropy',metrics=['accuracy'])
+    model.ﬁt_generator(train_batch, 
+   validation_data=valid_batch,epochs=15,steps_per_e
+   poch=SPE ,validation_steps=VS)
+    model.save('models/cnnCat2.h5', 
+   overwrite=True)import cv2
+                   MAIN CODE
+
+    import os
+    from keras.models import load_model
+    import numpy as np
+    from pygame import mixer
+    import time
+    mixer.init()
+    sound = mixer.Sound('alarm.wav')
+    face = cv2.CascadeClassiﬁer('haar cascade ﬁles\
+   haarcascade_frontalface_alt.xml')
+    leye = cv2.CascadeClassiﬁer('haar cascade ﬁles\
+   haarcascade_lefteye_2splits.xml')
+
+COMPUTER SCIENCE 
+    reye = cv2.CascadeClassiﬁer('haar cascade ﬁles\
+   haarcascade_righteye_2splits.xml')
+    lbl=['Close','Open']
+    model = load_model('models/cnncat2.h5')
+    path = os.getcwd()
+    cap = cv2.VideoCapture(0)
+    font = cv2.FONT_HERSHEY_COMPLEX_SMALL
+    count=0
+    score=0
+    thicc=2
+    rpred=[99]
+    lpred=[99]
+    while(True):
+       ret, frame = cap.read()
+       height,width = frame.shape[:2] 
+       gray                 =     cv2.cvtColor(frame, 
+   cv2.COLOR_BGR2GRAY)
+       
+       faces                                        = 
+   face.detectMultiScale(gray,minNeighbors=5,scaleFa
+   ctor=1.1,minSize=(25,25))
+       left_eye = leye.detectMultiScale(gray)
+       right_eye =  reye.detectMultiScale(gray)
+       cv2.rectangle(frame, (0,height-50) , (200,height) , 
+
+COMPUTER SCIENCE 
+   (0,0,0) , thickness=cv2.FILLED )
+       for (x,y,w,h) in faces:
+           cv2.rectangle(frame, (x,y) , (x+w,y+h) , 
+   (100,100,100) , 1 )
+       for (x,y,w,h) in right_eye:
+           r_eye=frame[y:y+h,x:x+w]
+           count=count+1
+           r_eye                                    = 
+   cv2.cvtColor(r_eye,cv2.COLOR_BGR2GRAY)
+           r_eye = cv2.resize(r_eye,(24,24))
+           r_eye= r_eye/255
+           r_eye=  r_eye.reshape(24,24,-1)
+           r_eye = np.expand_dims(r_eye,axis=0)
+           rpred = model.predict_classes(r_eye)
+           if(rpred[0]==1):
+               lbl='Open' 
+           if(rpred[0]==0):
+               lbl='Closed'
+           break
+       for (x,y,w,h) in left_eye:
+           l_eye=frame[y:y+h,x:x+w]
+           count=count+1
+           l_eye                                    = 
+   cv2.cvtColor(l_eye,cv2.COLOR_BGR2GRAY)  
+
+COMPUTER SCIENCE 
+           l_eye = cv2.resize(l_eye,(24,24))
+           l_eye= l_eye/255
+           l_eye=l_eye.reshape(24,24,-1)
+           l_eye = np.expand_dims(l_eye,axis=0)
+           lpred = model.predict_classes(l_eye)
+           if(lpred[0]==1):
+               lbl='Open'   
+           if(lpred[0]==0):
+               lbl='Closed'
+           break
+       if(rpred[0]==0 and lpred[0]==0):
+           score=score+1
+           cv2.putText(frame,"Closed",(10,height-20), 
+   font, 1,(255,255,255),1,cv2.LINE_AA)
+       # if(rpred[0]==1 or lpred[0]==1):
+       else:
+           score=score-1
+           cv2.putText(frame,"Open",(10,height-20), font, 
+   1,(255,255,255),1,cv2.LINE_AA)
+       
+           
+       if(score<0):
+           score=0   
+       cv2.putText(frame,'Score:'+str(score),
+
+COMPUTER SCIENCE 
+   (100,height-20),              font,             1,
+   (255,255,255),1,cv2.LINE_AA)
+       if(score>15):
+           #person is feeling sleepy so we beep the alarm
+           cv2.imwrite(os.path.join(path,'image.jpg'),fram
+   e)
+           try:
+               sound.play()
+               
+           except:  # isplaying = False
+               pass
+           if(thicc<16):
+               thicc= thicc+2
+           else:
+               thicc=thicc-2
+               if(thicc<2):
+                   thicc=2
+           cv2.rectangle(frame,(0,0),(width,height),
+   (0,0,255),thicc) 
+       cv2.imshow('frame',frame)
+       if cv2.waitKey(1) & 0xFF == ord('q'):
+           break
+    cap.release()
+    cv2.destroyAllWindows()
+
+COMPUTER SCIENCE 
+                \System Testing
+
+        In this we have used use case testing to test our 
+    system. Use Case  Testing is a functional black box testing 
+    technique that helps testers to identify test scenarios that 
+    exercise the whole system on each transaction basis from 
+    start to ﬁnish.
+    Test Cases & Test Results
+
+
+COMPUTER SCIENCE 
+COMPUTER SCIENCE 
+           Implementation
+
+    In this project we used different libraries of python.
+    All are listed below:
+1.
+1.1.
+   1.1.1.OpenCv: OpenCV is a library using which we have 
+     developed real-time computer vision application which 
+     focuses on image processing, video capture and analysis 
+     including features like face detection.
+   1.1.2.OS: OS module provides functions for interacting with the 
+     operating system. The os and os.path modules include many 
+     functions to interact with the file system.
+   1.1.3.Keras: We used keras for developing and evaluating our 
+     model. It wraps the efficient numerical computation library 
+     TensorFlow and allows us to define and train neural network 
+     models in just a few lines of code. H5 is a file format to store 
+     structured data. Keras saves models in this format as it can 
+     easily store the weights and model configuration in a single 
+     file.
+   1.1.4.NumPy: NumPy is a general-purpose array processing 
+     package which provides tools for handling the n-dimensional 
+     arrays. It provides various computing tools such as 
+     comprehensive mathematical functions, linear algebra 
+     routines. NumPy provides both the flexibility of Python and 
+     the speed of well-optimized compiled C code.
+   1.1.5.Pygame: We used sound libraries for alarming sound.
+           Mixer module helps control the music used in pygame 
+
+COMPUTER SCIENCE 
+     programs.
+1.
+1.1.
+   1.1.1.Time module: The Python time module provides many 
+     ways of representing time in code, such as objects, numbers, 
+     and strings. It also provides functionality other than 
+     representing time, like waiting during code execution and 
+     measuring the efficiency of our code.
+
+
+COMPUTER SCIENCE 
+       Conclusion
+The purpose of the drowsiness detection 
+system is to aid in the prevention of accidents 
+passenger and commercial vehicles. The 
+system  will detect the early symptoms of 
+drowsiness before the driver has fully lost all 
+attentiveness and warn the driver that they are 
+no longer capable of operating the vehicle 
+safely. This device will not, however, guarantee 
+that the driver will be fully awakened and that 
+an accident will be avoided. It is simply a tool 
+for improving driver safety; focusing primarily 
+on long-haul truck drivers, nighttime drivers, 
+people driving long distances alone or people 
+suffering from sleep deprivation.
+Thus we have successfully designed a 
+prototype drowsiness detection system using 
+OpenCV software and Haar Classiﬁers. The 
+system so developed was successfully tested, 
+
+
+COMPUTER SCIENCE 
+its limitations identiﬁed and a future plan of 
+action developed
+
+
+COMPUTER SCIENCE 
+                  References
+https://data-flair.training/blogs/python-project-driver-drowsiness-detection-system/
+http://ethesis.nitrkl.ac.in/3373/1/thesis-108EI038-026.pdf
+http://utpedia.utp.edu.my/13469/1/badiuzaman.pdf
+https://www.bogotobogo.com/cplusplus/files/OReilly%20Learning%20OpenCV.pdf
+
+
+COMPUTER SCIENCE 
